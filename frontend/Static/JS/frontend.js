@@ -7,11 +7,16 @@ const responseMsg = document.getElementById("responseMsg");
 const chartArea = document.getElementById("chart-area");
 let chartInstance = null;
 
-// Update a small timer every second
-setInterval(() => {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  timeElapsedSpan.innerText = elapsed;
-}, 1000);
+
+/*
+Do you need a timer? it's erroring because you don't have anything in your frontend
+*/
+
+// // Update a small timer every second
+// setInterval(() => {
+//   const elapsed = Math.floor((Date.now() - startTime) / 1000);
+//   timeElapsedSpan.innerText = elapsed;
+// }, 1000);
 
 // Toggle framework blocks
 document.querySelectorAll('input[name="framework"]').forEach(r => {
@@ -73,7 +78,8 @@ function drawChart(scores) {
   chartArea.style.display = "block";
 }
 
-// Gather all form values plus computed levels and post
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwADs29dQzaTRx_GdP1Y6GoRQa_Ah7RCuDBcmbDEQlO1SY99ByazHdmaEPNzmiyiveE/exec";
+
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
 
@@ -82,62 +88,38 @@ form.addEventListener("submit", async (ev) => {
   for (const [k, v] of formData.entries()) {
     payload[k] = v;
   }
-  // capture numeric fields properly
-  ["years_elementary","years_junior","years_high_school","years_university","years_institutes","age"].forEach(nk => {
+
+  // Capture numeric fields properly
+  ["years_elementary","years_junior","years_high_school","years_university","years_institutes","age","self_reading","self_listening","self_writing","self_speaking"].forEach(nk => {
     if (payload[nk] !== undefined) {
       payload[nk] = Number(payload[nk]) || 0;
     }
   });
 
   payload.time_taken_seconds = Math.floor((Date.now() - startTime) / 1000);
-  payload["Completion Date"] = new Date().toISOString().slice(0,10);
+  payload.Completion_Date = new Date().toISOString().slice(0,10);
 
-  // framework-specific highest levels
+  // Compute framework skill scores
   const framework = payload.framework || "ACTFL";
-  if (framework === "ACTFL") {
-    const scores = computeSkillScores("ACTFL");
-    payload["ACTFL Reading Proficiency Can Do Statements"] = scores.Reading;
-    payload["ACTFL Listening Proficiency Can Do Statements"] = scores.Listening;
-    payload["ACTFL Writing Proficiency Can Do Statements"] = scores.Writing;
-    payload["ACTFL Speaking Proficiency Can Do Statements"] = scores.Speaking;
-    // mark CEFRL as NA
-    payload["CEFRL Reading Proficiency Can Do Statements"] = "NA";
-    payload["CEFRL Listening Proficiency Can Do Statements"] = "NA";
-    payload["CEFRL Writing Proficiency Can Do Statements"] = "NA";
-    payload["CEFRL Speaking Proficiency Can Do Statements"] = "NA";
+  const scores = computeSkillScores(framework);
+  ["Reading","Listening","Writing","Speaking"].forEach(skill => {
+    payload[`${framework} ${skill} Proficiency Can Do Statements`] = scores[skill];
+    payload[framework === "ACTFL" ? "CEFRL" : "ACTFL" + " " + skill + " Proficiency Can Do Statements"] = "NA";
+  });
 
-    drawChart(scores);
-  } else {
-    const scores = computeSkillScores("CEFRL");
-    payload["CEFRL Reading Proficiency Can Do Statements"] = scores.Reading;
-    payload["CEFRL Listening Proficiency Can Do Statements"] = scores.Listening;
-    payload["CEFRL Writing Proficiency Can Do Statements"] = scores.Writing;
-    payload["CEFRL Speaking Proficiency Can Do Statements"] = scores.Speaking;
-    payload["ACTFL Reading Proficiency Can Do Statements"] = "NA";
-    payload["ACTFL Listening Proficiency Can Do Statements"] = "NA";
-    payload["ACTFL Writing Proficiency Can Do Statements"] = "NA";
-    payload["ACTFL Speaking Proficiency Can Do Statements"] = "NA";
+  drawChart(scores);
 
-    drawChart(scores);
-  }
-
-  // include self-rating fields as well
-  payload["Rate your reading profeciency"] = payload.self_reading || "";
-  payload["Rate your listening profeciency"] = payload.self_listening || "";
-  payload["Rate your writing profeciency"] = payload.self_writing || "";
-  payload["Rate your speaking profeciency"] = payload.self_speaking || "";
-
-  // send to backend
   responseMsg.textContent = "Saving…";
   try {
-    const res = await fetch("/submit", {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
     const data = await res.json();
-    if (data.status === "ok") {
-      responseMsg.textContent = "Thanks — your response was saved.";
+    if (data.result === "success") {
+      responseMsg.textContent = "Thanks — your response was saved!";
+      form.reset();
     } else {
       responseMsg.textContent = "Error: " + data.message;
     }
@@ -152,11 +134,16 @@ function updateLabel(slider) {
   label.textContent = levels[slider.value - 1];
 }
 
-fetch("/submit", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(formData)
-})
-  .then(res => res.json())  // fails if Flask sends nothing
-  .then(data => console.log("Response:", data))
-  .catch(err => console.error("Network error:", err));
+/*
+this is just a hanging fetch that executes at the very start of the page load -- I don't think it's useful 
+(you just need a fetch for the form itself) and you already have that with your button listener above
+*/
+
+// fetch("/submit", {
+//   method: "POST",
+//   headers: { "Content-Type": "application/json" },
+//   body: JSON.stringify(formData)
+// })
+//   .then(res => res.json())  // fails if Flask sends nothing
+//   .then(data => console.log("Response:", data))
+//   .catch(err => console.error("Network error:", err));
