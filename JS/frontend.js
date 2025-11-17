@@ -1,6 +1,6 @@
 // static/frontend.js
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhvj7YxIdxz7QlSKaYHfxQyyXz4jIJrs2xZLyNYGAEAky-r7uUdcS-JK-o9-f21e5v/exec"
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJpNVXPCwYy5LtslHmsCqQSy71ByguaJtPbbKeSphnC86DklAzmRUmpPoi_ByE9NI/exec"
 
 const form = document.getElementById("assessmentForm");
 const startTime = Date.now();
