@@ -1,6 +1,6 @@
 // static/frontend.js
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJpNVXPCwYy5LtslHmsCqQSy71ByguaJtPbbKeSphnC86DklAzmRUmpPoi_ByE9NI/exec"
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzqzf7Y3H4B7e9gIKfE5mHk4GXtErDS6boFE1hVM6-yGK6vtFI7_rpch1kmNhSaxcJB/exec"
 
 const form = document.getElementById("assessmentForm");
 const startTime = Date.now();
@@ -136,6 +136,11 @@ form.addEventListener("submit", async (ev) => {
   const other = framework === "CEFRL" ? "ACTFL" : "CEFRL";
   ["Reading","Listening","Writing","Speaking"].forEach(skill => {
     payload[`${other} ${skill} Proficiency Can Do Statements`] = "NA";
+  });
+
+  // add checkbox values individually by name
+  document.querySelectorAll('input[type="checkbox"][name]').forEach(cb => {
+    payload[cb.name] = cb.checked ? 1 : 0;
   });
 
   // include self-ratings
