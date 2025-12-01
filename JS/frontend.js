@@ -138,7 +138,7 @@ form.addEventListener("submit", (ev) => {
   ["Reading","Listening","Writing","Speaking"].forEach(skill => {
     const f = document.createElement("input");
     f.type = "hidden";
-    f.name = `${framework} ${skill} Proficiency Can Do Statements`;
+    f.name = `${framework}_${skill}_Proficiency_Can_Do_Statements`;
     f.value = scores[skill];
     form.appendChild(f);
   });
