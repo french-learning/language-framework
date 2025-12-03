@@ -100,8 +100,8 @@ body {
 }
 
 .info-box {
-    background-color: #d4e6f1;
-    border: 2px solid #000000;
+    background-color: #eeece4;
+    border: 2px solid #eeece4;
     padding: 12px 15px;
     margin-bottom: 0px;
     max-width: 550px;
@@ -117,11 +117,11 @@ body {
 .certification-info-box {
     position: absolute;
     bottom: 400px;
-    right: 20px;
-    background-color: #d4e6f1;
-    border: 2px solid #000000;
+    right: 225px;
+    background-color: #eeece4;
+    border: 2px solid #eeece4;
     padding: 12px 15px;
-    max-width: 300px;
+    max-width: 1500px;
     z-index: 50;
 }
 
@@ -203,11 +203,11 @@ body {
 
 .segment:hover {
     fill: #3a7ab0;
-    transform: scale(1.01);
+    transform: scale(1.05);
 }
 
 .segment.active {
-    fill: #2a5a88;
+    fill: #17426a;
 }
 
 .arrow-head {

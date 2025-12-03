@@ -81,12 +81,25 @@ document.addEventListener("DOMContentLoaded", () => {
       section.classList.toggle("hidden", !matchesCategory);
     });
 
-    // Filter items within visible sections
+    // Filter and highlight items within visible sections
     const items = Array.from(grid.querySelectorAll(".resource-item"));
     items.forEach(item => {
       const text = item.textContent.toLowerCase();
       const matchesSearch = searchVal === "" || text.includes(searchVal);
-      item.classList.toggle("hidden", !matchesSearch);
+      
+      // If search is active and matches, highlight the item
+      if (searchVal !== "" && matchesSearch) {
+        item.classList.add("highlighted");
+        item.classList.remove("hidden");
+      } else if (searchVal !== "" && !matchesSearch) {
+        // If search is active but doesn't match, hide the item
+        item.classList.remove("highlighted");
+        item.classList.add("hidden");
+      } else {
+        // If no search, remove both classes
+        item.classList.remove("highlighted");
+        item.classList.remove("hidden");
+      }
     });
 
     // Sort visible cards
