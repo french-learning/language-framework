@@ -52,7 +52,7 @@ body {
   list-style: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -95,23 +95,62 @@ body {
 .title {
     color: black;
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-weight: bold;
+}
+
+.info-box {
+    background-color: #d4e6f1;
+    border: 2px solid #000000;
+    padding: 12px 15px;
+    margin-bottom: 0px;
+    max-width: 550px;
+}
+
+.info-box p {
+    color: #000000;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.certification-info-box {
+    position: absolute;
+    bottom: 400px;
+    right: 20px;
+    background-color: #d4e6f1;
+    border: 2px solid #000000;
+    padding: 12px 15px;
+    max-width: 300px;
+    z-index: 50;
+}
+
+.certification-info-box p {
+    color: #000000;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .content-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
     position: relative;
-    min-height: 600px;
+    min-height: 550px;
 }
 
-.left-content,
+.left-content {
+    flex: 0.5;
+    padding: 20px;
+    padding-top: 60px;
+}
+
 .right-content {
     flex: 0.5;
     padding: 20px;
+    padding-top: 0;
 }
 
 .content-text {
@@ -179,7 +218,7 @@ body {
 
 .segment-label {
     fill: white;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: bold;
     text-anchor: middle;
     pointer-events: none;
@@ -245,7 +284,7 @@ body {
 .cta-section {
     text-align: center;
     padding: 60px 20px;
-    margin: 60px 0 40px 0;
+    margin: 20px 0 30px 0;
     border-radius: 8px;
 }
 

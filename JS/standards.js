@@ -39,11 +39,10 @@ const caption = document.getElementById("caption");
 
 let currentIndex = 0;
 
-// Captions for each slide
+// Captions for each slide (now 3 slides: intro, interpretive+interpersonal, standards)
 const captions = [
-  "Click on the squares to select your desired proficiency standard. Use the dots on the right to select the language category",
-  "Here you can browse all standards organized by category.",
-  "Use filters to narrow results by proficiency level or skill area.",
+  "Click on the squares to select your desired proficiency standard. Use the dots to navigate through the standards guide.",
+  "Interpretive and Interpersonal Communication Standards - Compare both standards side by side.",
   "Click any card to open more detailed information or resources."
 ];
 
@@ -52,8 +51,9 @@ function showSlide(index) {
   if (index < 0) index = slides.length - 1;
   currentIndex = index;
 
-  const slidesContainer = document.querySelector(".slides");
-  slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+  // Hide all slides, show only current one
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[index].classList.add("active");
 
   // Update dots
   dots.forEach(dot => dot.classList.remove("active"));

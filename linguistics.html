@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listening Resources</title>
+  <title>French Learning - Learning Resources</title>
   <link rel="stylesheet" href="CSS/categories.css">
 </head>
 <body>
@@ -12,10 +12,10 @@
   <div class="breadcrumb">
     <a href="resources.html">Resources</a>
     <span>></span>
-    <span>Listening</span>
+    <span>Linguistics/Grammar</span>
   </div>
 
-  <h1>Oral & Visual Comprehension</h1>
+  <h1>Learning</h1>
 
   <!-- Navigation bar -->
   <nav class="navbar">
@@ -37,47 +37,45 @@
     </ul>
   </nav>
 
-  <!-- Controls section -->
-  <div class="controls">
-    <div class="control-group">
-      <label for="searchInput">Search:</label>
-      <input type="text" id="searchInput" placeholder="Search resources...">
+  <!-- Filters and Search -->
+  <section class="controls">
+    <!-- SEARCH BAR -->
+    <div class="control">
+      <label for="searchInput">Search Resources:</label>
+      <input type="text" id="searchInput" placeholder="Search by keyword...">
     </div>
-    <div class="control-group">
+
+    <!-- FILTER BY CATEGORY -->
+    <div class="control">
       <label for="categoryDropdown">Filter by Category:</label>
       <div class="category-dropdown-wrapper">
         <button id="categoryDropdown" class="category-dropdown-button">All Categories</button>
         <div class="category-dropdown-menu">
           <label class="dropdown-checkbox">
-            <input type="checkbox" class="category-filter" value="movies" checked>
-            <span>Movies</span>
+            <input type="checkbox" class="category-filter" value="grammar" checked>
+            <span>Grammar</span>
           </label>
           <label class="dropdown-checkbox">
-            <input type="checkbox" class="category-filter" value="tvshows" checked>
-            <span>TV Shows</span>
+            <input type="checkbox" class="category-filter" value="spelling" checked>
+            <span>Spelling</span>
           </label>
           <label class="dropdown-checkbox">
-            <input type="checkbox" class="category-filter" value="radio" checked>
-            <span>Radio</span>
+            <input type="checkbox" class="category-filter" value="dictation" checked>
+            <span>Dictation</span>
           </label>
           <label class="dropdown-checkbox">
-            <input type="checkbox" class="category-filter" value="podcasts" checked>
-            <span>Podcasts</span>
-          </label>
-          <label class="dropdown-checkbox">
-            <input type="checkbox" class="category-filter" value="music" checked>
-            <span>Music</span>
+            <input type="checkbox" class="category-filter" value="generallearning" checked>
+            <span>Textbooks & General Learning</span>
           </label>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Grid container for resource cards -->
-  <main id="categoryGrid" class="grid">
-    <!-- Resource categories section -->
-    <section class="resource-section" data-category="movies">
-      <h2>Movies</h2>
+  <!-- Resource Grid -->
+  <main class="grid" id="categoryGrid">
+    <section class="resource-section" data-category="grammar">
+      <h2>Gramamar</h2>
       <ul class="resource-list">
         <li class="resource-item" data-level="beginner" data-type="listening"><a href="https://fr.wikipedia.org/wiki/Entre_les_murs_(film)" target="_blank">Entre les murs</a> (2008) <a href="https://www.youtube.com/watch?v=VfmKiH3ZuMM" target="_blank">Trailer</a></li>
         <li class="resource-item" data-level="beginner" data-type="listening"><a href="https://fr.wikipedia.org/wiki/Intouchables_(film)" target="_blank">Intouchables</a> (2011) <a href="https://www.youtube.com/watch?v=oK5hMNxqsFA" target="_blank">Trailer</a></li>
@@ -87,8 +85,8 @@
       </ul>
     </section>
 
-    <section class="resource-section" data-category="tvshows">
-      <h2>TV Shows</h2>
+    <section class="resource-section" data-category="spelling">
+      <h2>Spelling</h2>
       <ul class="resource-list">
         <li class="resource-item" data-level="beginner" data-type="listening">Book 1 - Title Here</li>
         <li class="resource-item" data-level="beginner" data-type="listening">Book 2 - Title Here</li>
@@ -98,8 +96,8 @@
       </ul>
     </section>
 
-    <section class="resource-section" data-category="radio">
-      <h2>Radio</h2>
+    <section class="resource-section" data-category="dictation">
+      <h2>Dictation</h2>
       <ul class="resource-list">
         <li class="resource-item" data-level="beginner" data-type="listening">Book 1 - Title Here</li>
         <li class="resource-item" data-level="beginner" data-type="listening">Book 2 - Title Here</li>
@@ -109,19 +107,8 @@
       </ul>
     </section>
 
-    <section class="resource-section" data-category="podcasts">
-      <h2>Podcasts</h2>
-      <ul class="resource-list">
-        <li class="resource-item" data-level="beginner" data-type="listening">Book 1 - Title Here</li>
-        <li class="resource-item" data-level="beginner" data-type="listening">Book 2 - Title Here</li>
-        <li class="resource-item" data-level="intermediate" data-type="listening">Book 3 - Title Here</li>
-        <li class="resource-item" data-level="intermediate" data-type="listening">Book 4 - Title Here</li>
-        <li class="resource-item" data-level="advanced" data-type="listening">Book 5 - Title Here</li>
-      </ul>
-    </section>
-
-    <section class="resource-section" data-category="music">
-      <h2>Music</h2>
+    <section class="resource-section" data-category="generallearning">
+      <h2>Textbooks & General Learning</h2>
       <ul class="resource-list">
         <li class="resource-item" data-level="beginner" data-type="listening">Book 1 - Title Here</li>
         <li class="resource-item" data-level="beginner" data-type="listening">Book 2 - Title Here</li>
@@ -132,9 +119,8 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <p>&copy; 2024 French Language Learning. All rights reserved.</p>
+    <p>2025 French Learning Portal · Built by Stiles Begnaud at Brown University</p>
   </footer>
 
   <script src="JS/categories.js"></script>

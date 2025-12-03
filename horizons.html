@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speaking Resources</title>
+  <link rel="stylesheet" href="CSS/categories.css">
+</head>
+<body>
+
+  <!-- Breadcrumb Navigation -->
+  <div class="breadcrumb">
+    <a href="resources.html">Resources</a>
+    <span>></span>
+    <span>Horizons</span>
+  </div>
+
+  <h1>Widening Horizons</h1>
+
+  <!-- Navigation bar -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="assessment.html">Assessment</a></li>
+      <li><a href="standards.htm">Standards</a></li>
+      <li class="dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="dropdown-menu">
+          <li><a href="reading.html">Written Comprehension</a></li>
+          <li><a href="listening.html">Oral & Visual Comprehension</a></li>
+          <li><a href="writing.html">Written Production</a></li>
+          <li><a href="horizons.html">Widening Horizons</a></li>
+          <li><a href="forfun.html">Play in French</a></li>
+          <li><a href="linguistics.html">Learning</a></li>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Controls section -->
+  <div class="controls">
+    <div class="control-group">
+      <label for="searchInput">Search:</label>
+      <input type="text" id="searchInput" placeholder="Search resources...">
+    </div>
+    <div class="control-group">
+      <label for="categoryDropdown">Filter by Category:</label>
+      <div class="category-dropdown-wrapper">
+        <button id="categoryDropdown" class="category-dropdown-button">All Categories</button>
+        <div class="category-dropdown-menu">
+          <label class="dropdown-checkbox">
+            <input type="checkbox" class="category-filter" value="general" checked>
+            <span>General Interest</span>
+          </label>
+          <label class="dropdown-checkbox">
+            <input type="checkbox" class="category-filter" value="funnyblogs" checked>
+            <span>Humorous Blogs</span>
+          </label>
+          <label class="dropdown-checkbox">
+            <input type="checkbox" class="category-filter" value="news" checked>
+            <span>News</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid container for resource cards -->
+  <main id="categoryGrid" class="grid">
+    <section class="resource-section" data-category="general">
+      <h2>General Resource Sites</h2>
+      <ul class="resource-list">
+        <li class="resource-item" data-level="beginner" data-type="reading"><a href="https://langue-francaise.tv5monde.com/?utm_source=tv5monde&utm_medium=metanav&utm_campaign=langue-francaise" target="_blank">TV5 monde</a></li>
+      </ul>
+    </section>
+
+    <section class="resource-section" data-category="funnyblogs">
+      <h2>Humorous Blogs</h2>
+      <ul class="resource-list">
+        <li class="resource-item" data-level="beginner" data-type="reading"><a href="https://lechat.com/" target="_blank">Un site humoristique:</a> le site du Char, une BD belge.</li>
+        <li class="resource-item" data-level="beginner" data-type="reading">Un blog plein d'humour: <a href="https://www.penelope-jolicoeur.com/" target="_blank">Ma vie est tout à fait fascinante</a> de Pénélope BAGIEU</li>
+      </ul>
+    </section>
+
+    <section class="resource-section" data-category="news">
+      <h2>News Sites</h2>
+      <ul class="resource-list">
+        <li class="resource-item"><a href="https://lemondedesados.fr/category/actu/" target="_blank">Le Monde des ados</a></li>
+        <li class="resource-item"><a href="https://www.1jour1actu.com/les-actus-a-la-une" target="_blank">1 jour 1 actu</a></li>
+        <li class="resource-item"><a href="https://www.1jour1actu.com/videos" target="_blank">1 jour 1 question</a></li>
+        <li class="resource-item"><a href="https://www.courrierinternational.com/" target="_blank">Courrier international</a></li>
+        <li class="resource-item">Les vidéos du<a href="https://www.youtube.com/lemonde" target="_blank"> Monde</a> sur YouTube pour comprendre l'actualité</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>2025 French Learning Portal · Built by Stiles Begnaud at Brown University</p>
+  </footer>
+
+  <script src="JS/categories.js"></script>
+</body>
+</html>
