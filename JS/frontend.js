@@ -19,8 +19,16 @@ let currentFramework = null;
 document.querySelectorAll('input[name="framework"]').forEach(r => {
   r.addEventListener("change", (e) => {
     const val = e.target.value;
-    document.getElementById("actfl-block").style.display = val === "ACTFL" ? "block" : "none";
-    document.getElementById("cefrl-block").style.display = val === "CEFRL" ? "block" : "none";
+    const actflBlock = document.getElementById("actfl-block");
+    const cefrlBlock = document.getElementById("cefrl-block");
+    
+    if (val === "ACTFL") {
+      actflBlock.style.display = "block";
+      cefrlBlock.style.display = "none";
+    } else if (val === "CEFRL") {
+      actflBlock.style.display = "none";
+      cefrlBlock.style.display = "block";
+    }
   });
 });
 
@@ -72,7 +80,7 @@ function drawChart(scores, framework = "ACTFL") {
       datasets: [{
         label: framework + " Proficiency Level",
         data,
-        backgroundColor: '#0074d9'
+        backgroundColor: '#4a90c8'
       }]
     },
     options: {
@@ -102,10 +110,71 @@ function drawChart(scores, framework = "ACTFL") {
   chartArea.style.display = "block";
 }
 
+// Validation function to check if all required fields are filled
+function validateForm() {
+  const errors = [];
+  
+  // Check native language
+  const nativeLanguage = document.querySelector('input[name="native_languages"]').value.trim();
+  if (!nativeLanguage) {
+    errors.push("Please enter your native language(s)");
+  }
+  
+  // Check age
+  const age = document.querySelector('input[name="age"]').value;
+  if (!age || age <= 0) {
+    errors.push("Please enter your age");
+  }
+  
+  // Check French speaking environment question
+  const speakingEnvironment = document.querySelector('input[name="speaking_environment"]:checked');
+  if (!speakingEnvironment) {
+    errors.push("Please answer whether you live in a French speaking environment");
+  }
+  
+  // Check education level
+  const education = document.querySelector('select[name="education"]').value;
+  if (education === "Select Level") {
+    errors.push("Please select your level of education");
+  }
+  
+  // Check if a framework is selected
+  const framework = document.querySelector('input[name="framework"]:checked');
+  if (!framework) {
+    errors.push("Please select a language framework (ACTFL or CEFRL)");
+  } else {
+    // Check if all four skills have at least one checkbox checked
+    const frameworkValue = framework.value;
+    const skills = ["Reading", "Listening", "Writing", "Speaking"];
+    const scores = computeSkillScores(frameworkValue);
+    
+    skills.forEach(skill => {
+      if (scores[skill] === 0) {
+        errors.push(`Please complete at least one checkbox for ${skill} in ${frameworkValue}`);
+      }
+    });
+  }
+  
+  // Check consent question
+  const consent = document.querySelector('input[name="consent"]:checked');
+  if (!consent) {
+    errors.push("Please answer the data sharing consent question");
+  }
+  
+  return errors;
+}
+
 
 // Direct form submission
 form.addEventListener("submit", (ev) => {
   ev.preventDefault();
+  
+  // Validate form before submission
+  const validationErrors = validateForm();
+  if (validationErrors.length > 0) {
+    alert("Please complete all required fields:\n\n" + validationErrors.join("\n"));
+    return;
+  }
   
   // Compute chosen framework and scores, then draw the chart so the user sees results on submit.
   const framework = document.querySelector('input[name="framework"]:checked').value || "ACTFL";
@@ -260,129 +329,168 @@ function generateResponsePDF(scores, framework) {
     checkboxesHTML += '</ul>';
   });
   
-  // Create HTML content for PDF
+  // Create HTML content for PDF (include minimal print-friendly CSS)
   let pdfContent = `
-    <div style="font-family: Arial, sans-serif; padding: 20px;">
+    <div style="font-family: Arial, sans-serif; padding: 20px; font-size: 12px; line-height: 1.4; color: #000; background: #fff;">
+      <style>
+        * { box-sizing: border-box; }
+        h1 { font-size: 20px; margin: 0 0 8px 0; }
+        h2 { font-size: 14px; margin: 14px 0 8px 0; }
+        h3 { font-size: 12px; margin: 10px 0 6px 0; color: #0074d9; }
+        p { margin: 4px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        td, th { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+        .html2pdf__page-break { height: 0; break-after: page; page-break-after: always; }
+      </style>
       <h1>French Language Self-Assessment Results</h1>
       <p><strong>Generated:</strong> ${timestamp}</p>
       
       <hr style="margin: 20px 0;">
       
       <h2>Basic Information</h2>
-      <table style="width: 100%; border-collapse: collapse;">
+      <table class="avoid-break">
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Native Languages:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('native_languages') || 'Not provided'}</td>
+          <td><strong>Native Languages:</strong></td>
+          <td>${formData.get('native_languages') || 'Not provided'}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Age:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('age') || 'Not provided'}</td>
+          <td><strong>Age:</strong></td>
+          <td>${formData.get('age') || 'Not provided'}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>French Speaking Environment:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('speaking_environment') || 'Not provided'}</td>
+          <td><strong>French Speaking Environment:</strong></td>
+          <td>${formData.get('speaking_environment') || 'Not provided'}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Highest Level of Education:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('education') || 'Not provided'}</td>
+          <td><strong>Highest Level of Education:</strong></td>
+          <td>${formData.get('education') || 'Not provided'}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Other Education (if specified):</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('other_education') || 'Not provided'}</td>
-        </tr>
-      </table>
-      
-      <h2 style="margin-top: 20px;">French Learning Experience (Years)</h2>
-      <table style="width: 100%; border-collapse: collapse;">
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Elementary School:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('years_elementary') || '0'} years</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Middle/Junior High School:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('years_junior') || '0'} years</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>High School:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('years_high_school') || '0'} years</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>University/College:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('years_university') || '0'} years</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Language Institutes:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('years_institutes') || '0'} years</td>
+          <td><strong>Other Education (if specified):</strong></td>
+          <td>${formData.get('other_education') || 'Not provided'}</td>
         </tr>
       </table>
       
-      <h2 style="margin-top: 20px;">Self-Rated Proficiency (1-4 Scale)</h2>
-      <table style="width: 100%; border-collapse: collapse;">
+      <h2>French Learning Experience (Years)</h2>
+      <table class="avoid-break">
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Reading:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('self_reading') || 'Not rated'}</td>
+          <td><strong>Elementary School:</strong></td>
+          <td>${formData.get('years_elementary') || '0'} years</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Listening:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('self_listening') || 'Not rated'}</td>
+          <td><strong>Middle/Junior High School:</strong></td>
+          <td>${formData.get('years_junior') || '0'} years</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Writing:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('self_writing') || 'Not rated'}</td>
+          <td><strong>High School:</strong></td>
+          <td>${formData.get('years_high_school') || '0'} years</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Speaking:</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${formData.get('self_speaking') || 'Not rated'}</td>
+          <td><strong>University/College:</strong></td>
+          <td>${formData.get('years_university') || '0'} years</td>
+        </tr>
+        <tr>
+          <td><strong>Language Institutes:</strong></td>
+          <td>${formData.get('years_institutes') || '0'} years</td>
         </tr>
       </table>
       
-      <h2 style="margin-top: 20px;">Assessment Results</h2>
+      <h2>Self-Rated Proficiency (1-4 Scale)</h2>
+      <table class="avoid-break">
+        <tr>
+          <td><strong>Reading:</strong></td>
+          <td>${formData.get('self_reading') || 'Not rated'}</td>
+        </tr>
+        <tr>
+          <td><strong>Listening:</strong></td>
+          <td>${formData.get('self_listening') || 'Not rated'}</td>
+        </tr>
+        <tr>
+          <td><strong>Writing:</strong></td>
+          <td>${formData.get('self_writing') || 'Not rated'}</td>
+        </tr>
+        <tr>
+          <td><strong>Speaking:</strong></td>
+          <td>${formData.get('self_speaking') || 'Not rated'}</td>
+        </tr>
+      </table>
+      
+      <h2>Assessment Results</h2>
       <p><strong>Framework Used:</strong> ${framework}</p>
-      <table style="width: 100%; border-collapse: collapse;">
+      <table class="avoid-break">
         <tr style="background-color: #f0f0f0;">
-          <th style="padding: 10px; border: 1px solid #ddd;">Skill</th>
-          <th style="padding: 10px; border: 1px solid #ddd;">Level</th>
+          <th>Skill</th>
+          <th>Level</th>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Reading</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${scores.Reading}</td>
+          <td><strong>Reading</strong></td>
+          <td>${scores.Reading}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Listening</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${scores.Listening}</td>
+          <td><strong>Listening</strong></td>
+          <td>${scores.Listening}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Writing</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${scores.Writing}</td>
+          <td><strong>Writing</strong></td>
+          <td>${scores.Writing}</td>
         </tr>
         <tr>
-          <td style="padding: 8px; border: 1px solid #ddd;"><strong>Speaking</strong></td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${scores.Speaking}</td>
+          <td><strong>Speaking</strong></td>
+          <td>${scores.Speaking}</td>
         </tr>
       </table>
+
+      <div class="html2pdf__page-break"></div>
       
-      <h2 style="margin-top: 20px;">${framework} Proficiency Statements - Checked Responses</h2>
+      <h2>${framework} Proficiency Statements - Checked Responses</h2>
       <p><em>The user checked the following "Can Do" statements:</em></p>
       ${checkboxesHTML || '<p style="color: #999;">No proficiency statements were selected.</p>'}
       
-      <h2 style="margin-top: 20px;">Additional Information</h2>
+      <h2>Additional Information</h2>
       <p><strong>Data Sharing Consent:</strong> ${formData.get('consent') || 'Not provided'}</p>
       <p><strong>Feedback:</strong></p>
       <p style="margin-top: 5px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd;">${formData.get('feedback') ? formData.get('feedback').replace(/\n/g, '<br>') : 'No feedback provided'}</p>
     </div>
   `;
   
-  // Generate PDF using html2pdf
+  // Generate PDF using html2pdf (attach element to DOM and enforce sizing)
   const element = document.createElement('div');
   element.innerHTML = pdfContent;
-  
+  // Constrain width under A4 content area to avoid left cut-off
+  element.style.width = '1000px';
+  element.style.background = '#ffffff';
+  element.style.color = '#000000';
+  element.style.margin = '0 auto';
+  // Nudge content to the right a bit to avoid left-edge clipping
+  // Shift content slightly left (more right padding than left)
+  element.style.padding = '0 50px 0 250px';
+  document.body.appendChild(element);
+
   const opt = {
-    margin: 10,
+    margin: [10, 10, 10, 10],
     filename: `French_Assessment_${new Date().toISOString().slice(0, 10)}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    html2canvas: { 
+      scale: 2, 
+      useCORS: true, 
+      letterRendering: true, 
+      backgroundColor: '#ffffff',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight
+    },
+    jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4', compress: true },
+    pagebreak: { mode: ['css', 'legacy', 'avoid-all'] }
   };
-  
-  html2pdf().set(opt).from(element).save();
+
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save()
+    .then(() => {
+      // Cleanup the temporary element after generation
+      document.body.removeChild(element);
+    });
 }

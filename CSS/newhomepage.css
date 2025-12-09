@@ -199,11 +199,18 @@ body {
     stroke-width: 3;
     cursor: pointer;
     transition: all 0.3s ease;
+    transform-origin: center;
+    transform-box: fill-box
 }
 
 .segment:hover {
     fill: #3a7ab0;
-    transform: scale(1.05);
+    transform: scale(1.1);
+}
+
+.segment:hover + text {
+    font-size: 24px;
+    transition: font-size 0.3s ease;
 }
 
 .segment.active {
@@ -223,7 +230,9 @@ body {
     text-anchor: middle;
     pointer-events: none;
     font-family: Arial, sans-serif;
+    transition: font-size 0.3s ease;
 }
+
 
 .certification-box {
     position: absolute;
@@ -298,7 +307,7 @@ body {
 .cta-button {
     display: inline-block;
     padding: 15px 40px;
-    background-color: #0074d9;
+    background-color: #4a90c8;
     color: #ffffff;
     text-decoration: none;
     border-radius: 5px;

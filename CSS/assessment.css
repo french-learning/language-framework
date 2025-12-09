@@ -1,6 +1,6 @@
 /* static/style.css */
 :root {
-  --accent: #0074d9;
+  --accent: #3a7ab0;
   --bg: #eeece4;
   --card: #eeece4;
   --muted: #666;
@@ -76,7 +76,7 @@ input[type="range"] {
   display: inline-block;
   margin-left: 10px;
   font-weight: 600;
-  color: #0074d9;
+  color: #3a7ab0;
 }
 
 /* Navigation bar */

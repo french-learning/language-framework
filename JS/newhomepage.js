@@ -86,6 +86,36 @@ document.addEventListener('DOMContentLoaded', () => {
         segment.addEventListener('click', () => {
             setActiveSegment(segment.id);
         });
+        
+        // Add hover effect to scale text with segment
+        segment.addEventListener('mouseenter', () => {
+            const segmentId = segment.id;
+            const labels = segment.parentElement.querySelectorAll(`#${segmentId} + text, text[id="${segmentId}-label"]`);
+            
+            // Find the next sibling text element
+            let nextElement = segment.nextElementSibling;
+            while (nextElement && nextElement.tagName !== 'text') {
+                nextElement = nextElement.nextElementSibling;
+            }
+            
+            if (nextElement && nextElement.tagName === 'text') {
+                nextElement.style.fontSize = '26px';
+            }
+        });
+        
+        segment.addEventListener('mouseleave', () => {
+            const segmentId = segment.id;
+            
+            // Find the next sibling text element
+            let nextElement = segment.nextElementSibling;
+            while (nextElement && nextElement.tagName !== 'text') {
+                nextElement = nextElement.nextElementSibling;
+            }
+            
+            if (nextElement && nextElement.tagName === 'text') {
+                nextElement.style.fontSize = '22px';
+            }
+        });
     });
     
     setActiveSegment('segment1');

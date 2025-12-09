@@ -39,11 +39,12 @@ const caption = document.getElementById("caption");
 
 let currentIndex = 0;
 
-// Captions for each slide (now 3 slides: intro, interpretive+interpersonal, standards)
+// Captions for each slide (3 slides placeholder)
 const captions = [
   "Click on the squares to select your desired proficiency standard. Use the dots to navigate through the standards guide.",
-  "Interpretive and Interpersonal Communication Standards - Compare both standards side by side.",
-  "Click any card to open more detailed information or resources."
+  "The ACTFL standards are divided into Interpretive and Interpersonal modes of communication. Select each box to view the corresponding descriptions.",
+  "The side menus highlight the selected proficiency level for each standard. Note that the descriptions for the previous and next levels are also visible to the left and right.",
+  "Note that the CEFRL standards for B1.1 and B2.1 are no longer in use. Refer to the description for guidance."
 ];
 
 function showSlide(index) {
@@ -70,7 +71,7 @@ prevBtn.addEventListener("click", () => showSlide(currentIndex - 1));
 // Dots click
 dots.forEach(dot => {
   dot.addEventListener("click", (e) => {
-    const index = parseInt(e.target.dataset.index);
+    const index = parseInt(e.target.dataset.index, 10);
     showSlide(index);
   });
 });

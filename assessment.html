@@ -48,12 +48,13 @@
 
       <label>Do you live in a French speaking environment?</label>
       <div class="row">
-        <label><input type="radio" name="speaking_environment" value="Yes" checked /> Yes</label>
+        <label><input type="radio" name="speaking_environment" value="Yes" /> Yes</label>
         <label><input type="radio" name="speaking_environment" value="No" /> No</label>
       </div>
 
       <label>What is your <span class="accent">highest</span> level of education?</label>
       <select name="education">
+        <option>Select Level</option>
         <option>Less than High School degree (Le brevet des collèges)</option>
         <option>High School degree (Le diplôme du baccalauréat)</option>
         <option>Undergraduate degree (Le diplôme de Licence)</option>
@@ -112,7 +113,7 @@
       </div>
 
       <!-- ACTFL expanders -->
-      <div id="actfl-block" class="framework-block">
+      <div id="actfl-block" class="framework-block" style="display:none;">
         <details>
           <summary>ACTFL Reading Proficiency Can Do Statements</summary>
           <div class="checkbox-list" data-skill="Reading" data-framework="ACTFL">
@@ -233,7 +234,7 @@
       <hr />
       <label>Do you consent to sharing your data?</label>
       <div class="row">
-        <label><input type="radio" name="consent" value="I consent to sharing my data" checked /> I consent to sharing my data</label>
+        <label><input type="radio" name="consent" value="I consent to sharing my data" /> I consent to sharing my data</label>
         <label><input type="radio" name="consent" value="I do not consent to sharing my data" /> I do not consent to sharing my data</label>
       </div>
 
@@ -252,7 +253,7 @@
       <h2>Proficiency Levels Across Skills</h2>
       <canvas id="proficiencyChart"></canvas>
       <div id="pdf-download-section" style="display:none; margin-top: 20px; text-align: center;">
-        <button type="button" id="downloadPdfBtn" style="background-color: #0074d9; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 16px;">Download Results as PDF</button>
+        <button type="button" id="downloadPdfBtn" style="background-color: #4a90c8; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 16px;">Download Results as PDF</button>
       </div>
     </section>
 

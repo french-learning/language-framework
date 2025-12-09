@@ -113,11 +113,17 @@ body {
 /* Page title */
 h1 {
   text-align: center;
-  margin: 80px 20px 30px 20px;
+  margin: 80px 20px 20px 20px;
   font-size: 48px;
   color: #111;
 }
 
+h3 {
+  text-align: center;
+  margin: 0px 20px 0px 20px;
+  font-size: 20px;
+  color: #444;
+}
 /* Controls section */
 .controls {
   display: flex;
@@ -127,7 +133,7 @@ h1 {
   padding: 1rem;
   background: var(--light-gray);
   border-bottom: 1px solid #dddddc;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .control {
@@ -153,8 +159,8 @@ h1 {
 .control input:focus,
 .control select:focus {
   outline: none;
-  border-color: #0074d9;
-  box-shadow: 0 0 0 3px rgba(0, 116, 217, 0.1);
+  border-color: #4a90c8;
+  box-shadow: 0 0 0 3px rgba(74, 144, 200, 0.15);
 }
 
 /* Grid layout */
@@ -215,7 +221,7 @@ h1 {
 }
 
 .card a:hover {
-  background-color: #005fa3;
+  background-color: #3a7ab0;
 }
 
 .card:hover {
@@ -239,7 +245,7 @@ h1 {
 }
 
 .skill-label.listening {
-  background-color: #2196f3;
+  background-color: #4a90c8;
 }
 
 .skill-label.writing {
@@ -331,7 +337,7 @@ footer {
   margin-bottom: 1.5rem;
   color: #111;
   font-size: 28px;
-  border-bottom: 2px solid #0074d9;
+  border-bottom: 2px solid #4a90c8;
   padding-bottom: 0.75rem;
 }
 
@@ -356,7 +362,7 @@ footer {
   padding: 1rem;
   margin-bottom: 0.5rem;
   background-color: #f9f9f9;
-  border-left: 4px solid #0074d9;
+  border-left: 4px solid #4a90c8;
   border-radius: 4px;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -373,14 +379,15 @@ footer {
 }
 
 .resource-item.highlighted {
-  background-color: #4da6ff;
-  border-left-color: #0056b3;
-  box-shadow: 0 4px 12px rgba(0, 116, 217, 0.3);
+  background-color: #4a90c8;
+  border-left-color: #3a7ab0;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(74, 144, 200, 0.3);
   animation: highlight-pulse 0.5s ease;
 }
 
 .resource-item.highlighted:hover {
-  background-color: #3d96ef;
+  background-color: #3a7ab0;
 }
 
 @keyframes highlight-pulse {
@@ -425,13 +432,13 @@ footer {
 }
 
 .category-dropdown-button:hover {
-  border-color: #0074d9;
+  border-color: #4a90c8;
 }
 
 .category-dropdown-button:focus {
   outline: none;
-  border-color: #0074d9;
-  box-shadow: 0 0 0 3px rgba(0, 116, 217, 0.1);
+  border-color: #4a90c8;
+  box-shadow: 0 0 0 3px rgba(74, 144, 200, 0.15);
 }
 
 .category-dropdown-button::after {
@@ -479,7 +486,7 @@ footer {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #0074d9;
+  accent-color: #4a90c8;
   margin: 0;
 }
 
@@ -489,12 +496,12 @@ footer {
 
 /* Link styling within resource items */
 .resource-item a {
-  color: #0074d9;
+  color: #4a90c8;
   text-decoration: underline;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .resource-item a:hover {
-  color: #005fa3;
+  color: #3a7ab0;
 }

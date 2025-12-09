@@ -160,13 +160,13 @@ h1 {
 
 .feedback-form textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: #4a90c8;
   box-shadow: 0 0 0 3px rgba(0, 116, 217, 0.1);
 }
 
 /* Submit button */
 .submit-btn {
-  background-color: var(--accent);
+  background-color: #4a90c8;
   color: white;
   padding: 12px 24px;
   border: none;

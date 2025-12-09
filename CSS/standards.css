@@ -99,15 +99,47 @@ html, body {
 
 .popup-content {
   background: white;
-  padding: 40px 50px;
+  padding: 24px 28px;
   border-radius: 10px;
   text-align: center;
-  max-width: 90%;
-  width: auto;
-  max-height: 90vh;
+  max-width: 900px;
+  width: 90%;
+  max-height: 81vh; /* reduce height so it doesn't take full screen */
   height: auto;
   overflow-y: auto;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Carousel */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 48vh; /* smaller carousel to fit reduced popup height */
+  max-height: 520px;
+  margin: 0 auto 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f6f6;
+  border: 1px solid #ddd;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.slide.active { display: flex; }
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* handle different image sizes gracefully */
 }
 
 /* ===== Buttons ===== */
@@ -116,7 +148,7 @@ button {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
-  background-color: #0078d4;
+  background-color: #4a90c8;
   color: white;
   cursor: pointer;
 }
