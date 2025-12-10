@@ -303,6 +303,26 @@ function generateResponsePDF(scores, framework) {
   const formData = new FormData(form);
   const timestamp = new Date().toLocaleString();
   
+  // Capture the proficiency chart as a data URL (PNG)
+  let chartDataUrl = null;
+  try {
+    const chartCanvas = document.getElementById('proficiencyChart');
+    if (chartCanvas) {
+      // Increase pixel density for sharper PDF image
+      const tmpCanvas = document.createElement('canvas');
+      const scale = 2;
+      tmpCanvas.width = chartCanvas.width * scale;
+      tmpCanvas.height = chartCanvas.height * scale;
+      const ctx = tmpCanvas.getContext('2d');
+      ctx.scale(scale, scale);
+      ctx.drawImage(chartCanvas, 0, 0);
+      chartDataUrl = tmpCanvas.toDataURL('image/png');
+    }
+  } catch (e) {
+    // If capturing fails, leave chartDataUrl null and continue
+    chartDataUrl = null;
+  }
+  
   // Collect all checked checkboxes grouped by skill
   const checkedBoxes = {};
   document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
@@ -342,11 +362,16 @@ function generateResponsePDF(scores, framework) {
         td, th { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
         .avoid-break { break-inside: avoid; page-break-inside: avoid; }
         .html2pdf__page-break { height: 0; break-after: page; page-break-after: always; }
+        .chart-wrapper { display: block; width: 100%; text-align: center; margin: 12px 0 18px; }
+        .chart-image { max-width: 100%; height: auto; border: 1px solid #ddd; padding: 6px; background: #fafafa; }
       </style>
       <h1>French Language Self-Assessment Results</h1>
       <p><strong>Generated:</strong> ${timestamp}</p>
       
       <hr style="margin: 20px 0;">
+      
+      <h2>Proficiency Chart</h2>
+      ${chartDataUrl ? `<div class="chart-wrapper"><img class="chart-image" src="${chartDataUrl}" alt="Proficiency Chart"></div>` : `<p style="color:#999">Chart unavailable. Please ensure the chart is rendered before exporting.</p>`}
       
       <h2>Basic Information</h2>
       <table class="avoid-break">
@@ -464,7 +489,7 @@ function generateResponsePDF(scores, framework) {
   element.style.margin = '0 auto';
   // Nudge content to the right a bit to avoid left-edge clipping
   // Shift content slightly left (more right padding than left)
-  element.style.padding = '0 50px 0 250px';
+  element.style.padding = '0 0px 0 450px';
   document.body.appendChild(element);
 
   const opt = {

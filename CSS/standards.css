@@ -1,3 +1,9 @@
+/* Move the Standards H1 50px to the right */
+.page-header h1,
+h1 {
+  position: relative;
+  left: 50px;
+}
 /* Reset default margins and set full height */
 html, body {
   height: 100%;
