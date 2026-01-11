@@ -102,14 +102,14 @@ body {
 .info-box {
     background-color: #eeece4;
     border: 2px solid #eeece4;
-    padding: 30px 15px 80px;
+    padding: 30px 0px 80px;
     margin-bottom: 50px;
-    max-width: 1000px;
+    max-width: 1300px;
 }
 
 .info-box p {
     color: #000000;
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     margin: 0;
 }
